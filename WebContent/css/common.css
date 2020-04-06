@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/*   layout */
+*,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button{margin:0;padding:0;}
+::-ms-clear,::-ms-reveal{display:none;}
+html{}
+body{height:100%;color:#3b3b3b;}
+h1,h2,h3,h4,h5,h6{font-weight:normal;}
+fieldset,li{border:0;vertical-align:top;}
+ul,ol{list-style:none;}
+img{border:none;vertical-align:top;}
+button{overflow:visible;border:0;background-color:transparent;cursor:pointer;}
+button::-moz-focus-inner{padding:0;border:0;}
+textarea{outline:none;resize:none;}
+address,caption,em{font-style:normal;}
+a{color:#3b3b3b;text-decoration:none;}
+table{border-spacing:0;border-collapse:collapse;width:100%;table-layout:fixed;}
+hr{display:none;}
+a:focus,button:focus{outline:none;-moz-outline:none;}
+
+/* common */
+body,input,select,textarea,button{font-family:'나눔고딕','NanumGothic',ng,'돋움',Dotum,'Apple SD Gothic Neo',sans-serif;font-weight:normal;font-size:12px;color:#3b3b3b;}
+.wrap{position:relative;margin:0 auto;height:100%;}

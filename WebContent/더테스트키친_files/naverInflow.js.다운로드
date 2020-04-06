@@ -1,0 +1,35 @@
+$(function(){
+    shop.naverInflow.ready();
+})
+shop.naverInflow = {
+    ready: function(){
+        this.wcsDo();
+    },
+    wcsDo: function(){
+        var currentPage = window.location.href.substring(window.location.href.lastIndexOf("/")).toLowerCase();
+        if (currentPage.indexOf('paymentresult.html') < 0) {
+            if (!wcs_add) var wcs_add = {};
+            wcs_add["wa"] = deployInfo.naverCommonAuthKey;
+
+            wcs.inflow(location.host);
+            wcs_do();
+        }
+    },
+    wcsDoCPA: function (cpaOrder,goodsPrice) {
+        if (!wcs_add) var wcs_add = {};
+        wcs_add["wa"] = deployInfo.naverCommonAuthKey;
+        wcs.inflow(location.host);
+
+        var _nao = {};
+        if (wcs.isCPA && deployInfo.agreeCPA == 'Y') {
+            _nao["chn"] = "AD";
+            _nao["order"] = JSON.stringify(cpaOrder);
+            wcs.CPAOrder(_nao);
+        }
+
+        var _nasa={};
+        _nasa["cnv"] = wcs.cnv("1",goodsPrice);
+        wcs_do(_nasa);
+
+    }
+}

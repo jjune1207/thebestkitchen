@@ -1,0 +1,47 @@
+<!-- ▼▼ popup ▼▼ -->
+<div class="category-popupArea" style="display:none">
+  <div class="popupCon" id="content">
+      {{{popus.content}}}
+      <div class="popupConBtn">
+        <button class="btn-notShow">오늘 하루 안보기</button>
+        <button class="btn-close">닫기</button>
+      </div>
+  </div>
+</div>
+<!-- ▲▲▲▲ popup ▲▲▲▲ -->
+<script src="js/utils/dateUtils.html"></script>
+<script src="js/cookiePop.1.0.html"></script>
+<script>
+  $(document).ready(function () {
+      if(/(.*\/|.*index|.*index\.html)$/.test(location.pathname)) {
+        getPopus()
+      }
+  })
+  function getPopus () {
+        if (shop.getCookie('CATEGORYPOP') !== getToday() || !shop.getCookie('CATEGORYPOP')) {
+            shop.ajax({
+                url: deployInfo.apiUrl + '/display/popups',
+                type: 'GET',
+                data: null,
+                success: $.proxy(function (res) {
+                totalCnt = res.totalCount;
+                var items = res;
+                var popus = '';
+
+                var nowDateTime = new Date().getTime()
+                for (var i = 0; i < items.length; i++) {
+                    if (new Date(items[i].startYmdt.replace(/-/g, '../index.html') + ' GMT+9').getTime() < nowDateTime &&
+                    new Date(items[i].endYmdt.replace(/-/g, '../index.html') + ' GMT+9').getTime() > nowDateTime) {
+                    popus = items[i]
+                    break;
+                    }
+                }
+                if (popus) {
+                    $('#content').render({ "popus": popus });
+                    $('.category-popupArea').show();
+                }
+                }, this)
+            })
+    }
+  }
+ </script>

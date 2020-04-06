@@ -1,0 +1,95 @@
+#main{  /* main이 왜 absolute ? */
+position:initial;z-index:initial;}
+body .editorCanvas{background:initial;}
+body .editorCanvas > .wrap{height:100%;}
+.editorCanvas .sectionLine{  /* section-line -> absolute 필요 없어보임.*/
+position:initial;top:initial;left:initial;z-index:initial;}
+.__element_wrapper{  /* 엘리먼트의 최상위 선택 동작을 위해 위해 wrapper absolute */
+position:absolute;cursor:pointer;top:0px;left:0px;}
+.__zIndex_top{  /* 엘리먼트의 최상위 선택 동작을 위해 위해 wrapper absolute */
+z-index:1000;}
+.layer_popup{  /*@todo 마크업쪽에 .layer_popup 기본 display 제거 요청. open | close 상태에 따라 display 변경되게 class 분리 */
+display:block;}
+.column.drag-over{box-shadow:inset 0 0 0 2px red;}
+.column{height:100%;position:relative;}
+.__element_wrapper .packBox{width:100%;height:100%;}
+.__element_wrapper .packBox img{width:100%;height:100%;}
+.image-radio-section label{display:inline-block;}
+.image-radio-section input[type='radio']{position:absolute;visibility:hidden;}
+.image-radio-section input[type='radio']:checked + label{background-color:#e5e5e5;}
+.colorResult{vertical-align:middle;}
+.bg_image.upload .image_li .delete{  /* edit.css에 ".bg_image.upload .image_li .closeBtn" 로 있으나, 이름이 closeBtn이라서 delete로 변경 적용 */
+display:none;position:absolute;top:0;right:0;background-image:url('../img/spr_edit-sa4b002079f.html');background-repeat:no-repeat;text-shadow:none;color:transparent;padding:0;border:none;overflow:hidden;width:12px;height:12px;background-position:0 -417px;font-size:0!important;}
+.bg_image.upload .image_li:hover .delete{display:block;}
+.swiper-container{width:100%;height:100%;}
+.swiper-slide{text-align:center;  /*background-color: whitesmoke;*/}
+.swiper-slide img{width:100%;height:100%;}
+
+/* 섹션 영역 위치 계산 문제로 필요 */
+#wrapper{position:initial;}
+.column-3 .column{width:390px;margin-left:0;margin-right:0;float:left;margin-bottom:0;}
+.column-2 .column{width:585px;margin-left:0;float:left;}
+.columnArea{position:relative;width:100%;height:100%;box-sizing:border-box;}
+.columnArea > .swiper-slide{width:100%;}
+.editorCanvas .sectionResize{position:absolute;top:0;left:50%;width:10px;height:100%;z-index:102;}
+.editorCanvas .sectionResize > span{width:6px;height:6px;border:1px solid #fd3930;position:absolute;cursor:ns-resize;background:#fff;}
+.editorCanvas .sectionResize > span.bottom-resize{left:-3px;bottom:-3px;}
+.element-transform-ui{cursor:move;}
+.element-transform-ui.disabled span{display:none;}
+.wrap.fullWidth{width:100%;}
+.wrap.fullWidth > .columnArea{width:100%;}
+.wrap > .columnArea{  /*width: 1170px;*/
+overflow:visible;}
+.editorCanvas:hover .product.columnArea.column-3{background:none;}
+.columnArea > .column{position:relative;  /*overflow: hidden;*/}
+.product.columnArea{display:flex;flex-wrap:wrap;overflow:hidden;}
+header .columnArea{overflow:visible;}
+header .columnArea > .column{overflow:visible;}
+.product .column-wrapper{width:100%;}
+.product.column-1 .column{width:100%;margin-left:0;height:unset;}
+.product.column-3 .column{width:calc(33% - 21px);margin-left:0;margin-right:30px;height:unset;}
+.product.column-4 .column{width:calc(25% - 23px);margin-left:0;margin-right:30px;height:unset;}
+.product.column-4 .column:nth-child(4n){margin-right:0;}
+.product.column-3 .column:nth-child(3n){margin-right:0;}
+.column .productsList{margin-left:0;height:inherit;font-size:12px;}
+.column .productsList li{margin-left:0;width:100%;height:inherit;}
+.column .productsList .img{width:100%;height:inherit;}
+.column .productsList .img img{height:unset;}
+.goods-list .goods-list-li{width:unset;}
+.footer-shopinfo{font-size:12px;line-height:22px;}
+.footer-shopinfo li{display:inline-block;margin-right:12px;}
+.footer-policy li{display:inline-block;margin-right:20px;}
+.footer-policy li:last-child{margin-right:0;}
+body #editPanel .editMenu .editMenu_main .menu_main_li .history_list{height:auto;}
+body .sns:after{content:'';clear:both;display:block;}
+body .sns a{float:left;width:33.3%;overflow:hidden;}
+body .sns img{width:100%;}
+.video{position:relative;width:100%;height:100%;}
+.video-inner{position:absolute;top:0;left:0;width:100%;height:100%;}
+.noticeBoard{background-color:#f2f2f2;height:100%;text-align:center;}
+.header_icons_item{display:inline-block;margin:0 10px 0 10px;float:left;}
+.header_icons_item > a{display:block;width:16px;height:18px;background-size:cover;background-size:100%;background-position:50% 50%;background-repeat:no-repeat;}
+.header_icons_item.search > a{background-image:url(../img/common/ico_search.png);}
+.header_icons_item.mypage > a{background-image:url(../img/common/ico_user.png);}
+.header_icons_item.cart > a{background-image:url(../img/common/ico_cart.html);}
+.header_menus{font-size:14px;font-family:quicksand-regular;}
+.editorCanvas .header_menus_item{float:left;display:inline-block;padding:0 25px;white-space:nowrap;}
+.txt-align.vtl_m{display:table-cell;}
+p.btn,
+p.btn > a{box-sizing:border-box;}
+.editorCanvas .sectionMove{z-index:102;}
+.editorCanvas.selected .sectionMove .btn-move-up{background-image:url('../img/spr_edit-sa4b002079f.html');background-repeat:no-repeat;font:0/0 a;text-shadow:none;color:transparent;padding:0;border:none;overflow:hidden;width:12px;height:7px;background-position:0 -2547px;margin:0 1px;}
+.editorCanvas.selected .sectionMove .btn-move-down{background-image:url('../img/spr_edit-sa4b002079f.html');background-repeat:no-repeat;font:0/0 a;text-shadow:none;color:transparent;padding:0;border:none;overflow:hidden;width:12px;height:7px;background-position:0 -818px;margin:0 1px;}
+.editorCanvas:hover .sectionShow,
+.editorCanvas:hover .sectionMove,
+.editorCanvas.selected .sectionShow,
+.editorCanvas.selected .sectionMove{display:block;}
+.text.itemCover > a{color:inherit;}
+#editPanel .editMenu .editMenu_main .menu_main_li .history_list .history_li{text-align:left;padding:1px 7px;line-height:22px;}
+@media screen and (max-width:1024px){
+  .product.column-3 .column{width:calc(31% - 15px);margin-left:0;margin-right:30px;height:unset;}
+  .product.column-4 .column{width:calc(50% - 5px);margin-left:10px;margin-right:0;height:unset;}
+  .product.column-4 .column:nth-of-type(odd){margin-left:0;}
+  .inner-editor.column-3 .column{width:calc(33% - 21px);}
+  .inner-editor.column-4 .column{width:calc(25% - 23px);}
+}

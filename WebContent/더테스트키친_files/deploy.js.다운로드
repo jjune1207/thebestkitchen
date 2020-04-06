@@ -1,0 +1,119 @@
+/*
+ * Copyright 2018 NHN Ent. All rights Reserved.
+ * NHN Ent PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
+var deployInfo = {
+    profile: 'release',
+    clientId: '+oOClAodZ3r8b68gvtgpZA==',
+    osType: 'WEB',
+    loginCookieName: 'NCP_ACCESS_TOKEN',
+    guestCookieName: 'NCP_GUEST',
+    payJs: '',
+    apiUrl: '',
+    platform: 'WEB_PC',
+    mallName: '더테스트키친',
+    sections: [
+    20681
+        ],
+    categories: {
+        '79277' : {
+            title: '과자'
+        }
+        },
+    boards: {
+        '52889': {
+            title: '공지사항',
+            memberWrite: false,
+            guestWrite: false,
+            secreted: false,
+            replied: false
+            }
+    ,
+        '52890': {
+            title: '자유게시판',
+            memberWrite: true,
+            guestWrite: true,
+            secreted: false,
+            replied: false
+            }
+    ,
+        '52891': {
+            title: 'Q&amp;amp;A',
+            memberWrite: true,
+            guestWrite: true,
+            secreted: true,
+            replied: false
+            }
+        },
+    supportOauth: {
+        naver: true
+        ,
+        kakao: true
+            },
+    naverShoppingUseYn: 'Y',
+    naverCommonAuthKey: 's_2ae3c0f6d3ec',
+    agreeCPA: 'Y',
+    instagramAccessToken: '1941852715.e5fa3ea.758381e231554926a20403956c7f5fc5',
+    mobileLogoUrl: '',
+    privacyConsignmentUse: false,
+    privacyThirdPartyUse: false,
+    favicon: 'https://api-storage.cloud.toast.com/v1/AUTH_69db659103894b00aa9f8b28aa62fe8e/shopby-favicon/1576743376241_투명파비콘1.ico',
+    bindAgreements: function(elem, agreement) {
+        $(elem).load(shop.getRoot() + "/agreements/agreements.html #" + agreement);
+    },
+    ssl: true,
+    pageWidth: 'wide',
+    domain: 'www.thetestkitchen.co.kr'
+}
+
+var clientId = deployInfo.clientId;
+
+var favicon = deployInfo.favicon || shop.getRoot() + 'style/img/shopby_favicon.ico'
+document.write(' <link rel="shortcut icon" href="' + favicon + '" />')
+
+if(deployInfo.profile === 'release') {
+    document.write('<script src="' + shop.getRoot() + 'config/readyshop.js"><\/script>')
+} else if(deployInfo.profile === 'beta') {
+    document.write('<script src="' + shop.getRoot() + 'config/readyshop.js"><\/script>')
+} else {
+    document.write('<script src="' + shop.getRoot() + 'config/readyshop_sandbox.js"><\/script>')
+}
+
+var payJs, apiUrl;
+if(deployInfo.profile === 'release') {
+    deployInfo.payJs = 'ncp_pay.js';
+    deployInfo.apiUrl = 'https://api.e-ncp.com';
+} else if(deployInfo.profile === 'beta') {
+    deployInfo.payJs = 'ncp_pay_beta.js';
+    deployInfo.apiUrl = 'https://beta-api.e-ncp.com';
+} else {
+    deployInfo.payJs = 'ncp_pay_alpha.js';
+    deployInfo.apiUrl = 'https://alpha-api.e-ncp.com';
+}
+
+document.title = deployInfo.mallName;
+
+//보안서버 사용시 리다이렉트
+if (typeof deployInfo.ssl !== 'undefined' && typeof deployInfo.domain !== 'undefined') {
+    var path = '';
+    var redirectUrl = '';
+    if(deployInfo.ssl === true){
+        if (location.protocol === "http:") {
+            path = location.href.replace(shop.getRoot(),'');
+            redirectUrl = 'https:' + "//" + deployInfo.domain + '/' + path;
+            window.location.replace(redirectUrl);
+        }
+    }else{
+        /*
+        if(location.host != deployInfo.domain){
+            path = location.href.replace(shop.getRoot(),'');
+            redirectUrl = 'http:' + "//" + deployInfo.domain + '/' + path;
+            window.location.replace(redirectUrl);
+        }
+        */
+    }
+}
+
+if (typeof deployInfo.naverShoppingUseYn !== 'undefined' && deployInfo.naverShoppingUseYn == 'Y') {
+    document.write('<script src="'+shop.getRoot()+'js/module/naverInflow.js"><\/script>')
+}

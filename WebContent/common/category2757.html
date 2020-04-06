@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Mirrored from thetestkitchen.co.kr/common/category.html?categoryNo={{categoryNo}} by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jan 2020 15:41:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="description" content="">
+        <link rel="stylesheet" type="text/css" href="../style/css/import.css">
+    <script src="../js/jquery-1.7.2.js"></script>
+    <script src="../js/utils/dateUtils.js"></script>
+    <script src="../js/cookiePop.1.0.js"></script>
+    <script src="../js/lib/handlebars/handlebars-v3.1.0.js"></script>
+    <script src="../js/lib/jquery/jquery-handlebars.js"></script>
+    <script type="text/javascript" src="../../wcs.naver.net/wcslog.js"></script>
+    <script src="../js/module/common.js"></script>
+    <script src="../js/module/appinfo.js"></script>
+    <script src="../js/utils/productUtils.js"></script>
+    <script src="../js/module/category.js"></script>
+    <script src="../js/module/metaTagBinder.js"></script>
+    <title></title>
+</head>
+
+<body>
+
+<!-- ▼▼▼▼▼▼ wrapper ▼▼▼▼▼▼ -->
+<div id="wrapper">
+
+    <!-- ▼▼▼▼ header ▼▼▼▼ -->
+    <div id="header"></div>
+    <!-- ▲▲▲▲ header ▲▲▲▲ -->
+
+    <!-- ▼▼▼▼ main ▼▼▼▼ -->
+    <main id="main">
+        <div class="wrap">
+            <div class="category-wrap">
+                <div class="productsArea">
+                    <h1><span class="title"/></h1>
+                    <ul class="productsList">
+                </div>
+                <p class="btn-row">
+                    <button type="button" class="btn white-2 style-3-4">더보기</button>
+                </p>
+            </div>
+        </div>
+    </main>
+    <!-- ▲▲▲▲ main ▲▲▲▲ -->
+
+    <!-- ▼▼▼▼ footer ▼▼▼▼ -->
+    <div id="footer">
+        <!-- ▼▼ footer-shop ▼▼ -->
+        <section id="footer-shop"></section>
+        <script>
+            $("#footer-shop").load("../footer_shop.html");
+        </script>
+        <!-- ▲▲ footer-shop ▲▲ -->
+        <!-- ▼▼ footer-common ▼▼ -->
+        <section id="footer-common"></section>
+        <script>
+            $("#footer-common").load("../footer_common.html");
+        </script>
+        <!-- ▲▲ footer-common ▲▲ -->
+    </div>
+    <!-- ▲▲▲▲ footer ▲▲▲▲ -->
+
+</div>
+<!-- ▲▲▲▲▲▲ wrapper ▲▲▲▲▲▲ -->
+<!-- ▼▼ popup ▼▼ -->
+<div class="category-popupArea">
+    <div class="popupCon" id="content">
+        {{{popus.content}}}
+        <div class="popupConBtn">
+          <button class="btn-notShow">오늘 하루 안보기</button>
+          <button class="btn-close">닫기</button>
+        </div>
+    </div>
+</div>
+<!-- ▲▲▲▲ popup ▲▲▲▲ -->
+
+<script id="product-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <li>
+        <p class="img">
+            <a href="product6713.html?pno={{productNo}}">
+                {{#ifDiscount immediateDiscountAmt additionDiscountAmt}}
+                <strong class="ico-discount">할인</strong>
+                {{/ifDiscount}}
+                <img src="{{imageUrl}}" alt="">
+            </a>
+        </p>
+        <dl class="info">
+            <dt>{{productName}}</dt>
+            <dd>
+                {{{priceHtml}}}
+            </dd>
+        </dl>
+    </li>
+    {{/each}}
+</script>
+</body>
+
+
+<!-- Mirrored from thetestkitchen.co.kr/common/category.html?categoryNo={{categoryNo}} by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jan 2020 15:41:12 GMT -->
+</html>

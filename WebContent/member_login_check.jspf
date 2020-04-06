@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	//로그인하지 않은 상태에서는 보여지지 않게 만듦
+	String sMemberId=(String)session.getAttribute("sMemberId");
+	String sMemberPw=(String)session.getAttribute("sMemberPw");
+	if(sMemberId==null){
+		out.println("<script>");
+		out.println("alert('로그인 먼저 해주세요!');");
+		out.println("location.href='member_login_form.jsp';");
+		out.println("</script>");
+		//response.sendRedirect("main.jsp");
+		return;
+	}
+%>

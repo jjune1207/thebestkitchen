@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Mirrored from thetestkitchen.co.kr/common/product.html?pno={{productNo}} by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jan 2020 15:37:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="../style/css/import.css">
+  <link rel="stylesheet" type="text/css" href="../style/css/slick.css">
+  <script src="../js/jquery-1.7.2.js"></script>
+  <script src="../js/lib/handlebars/handlebars-v3.1.0.js"></script>
+  <script src="../js/lib/jquery/jquery-handlebars.js"></script>
+  <script type="text/javascript" src="../../wcs.naver.net/wcslog.js"></script>
+  <script src="../js/module/common.js"></script>
+  <script src="../js/module/appinfo.js"></script>
+  <script src="../js/module/metaTagBinder.js"></script>
+  <script src="../js/utils/StringUtils.js"></script>
+  <script src="../js/utils/orderUtils.js"></script>
+  <script src="../js/module/profile.js"></script>
+  <script src="../js/module/coupon.js"></script>
+  <script src="../js/slick.min.js"></script>
+  <script src="../js/starSnsDrop.1.0.js"></script>
+  <script src="../js/scrollTo.1.0.js"></script>
+  <script src="../js/textareaInput.1.0.js"></script>
+  <script src="../js/subDetail.1.0.js"></script>
+  <script src="../../developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <title></title>
+  <style>
+    .p-img {
+      width: 100%;
+      height: 100%;
+    }
+    .ovfHiden {
+      overflow: hidden;
+    }
+  </style>
+  <script id="multi-option-template" type="text/x-handlebars-template">
+      <div class="op-text">{{{item.label}}}</div>
+      <div class="amount" style="width:124px;" >
+        <button class="decrease" style="width:25px;" onClick="cntSet('minus',{{item.optionNo}})">-</button>
+        <input id="orderCnt-{{item.optionNo}}" class="orderCnt input-normal" type="{{item.inputType}}" maxlength="8"  autocomplete="off" style="display: inline-block;width:74px;text-align: center;" value="1" onBlur="buyCountInputCheck(this,{{item.optionNo}})">
+        <button class="increase" style="width:25px;" onClick="cntSet('plus',{{item.optionNo}})">+</button>
+      </div>
+      <div class="price-wrap">
+        <span class="price-text">{{item.showBuyPrice}}원</span>
+        <button class="btn-delete" onClick="multiOptionDel({{item.optionNo}})">삭제</button>
+      </div>
+      <input type="hidden" id="op-buyPrice-{{item.optionNo}}" value="{{item.buyPrice}}">
+  </script>
+  <script id="duty-template" type="text/x-handlebars-template">
+    <h2><strong>상품정보 제공고시</strong></h2>
+    <table class="tbl">
+      <caption class="blind">상품정보 제공고시</caption>
+      <colgroup>
+        <col style="width:150px">
+        <col>
+      </colgroup>
+      <tbody>
+      {{#each items}}
+      <tr>
+        <th scope="row">{{key}}</th>
+        <td>{{value}}</td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </script>
+  <script id="cate-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <li>
+      {{#ne @index 0}}
+      &gt;
+      {{/ne}}
+      <a href="category2757.html?categoryNo={{categoryNo}}">{{label}}</a>
+    </li>
+    {{/each}}
+  </script>
+
+  <script id="coupon-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <div class="coupon percent">
+      <button type="button" onclick="downloadCoupon('{{couponNo}}')" class="bx_price">
+        <span class="txt">
+          {{#if discountInfo.fixedAmt}}
+          최대 {{discountInfo.discountAmt}}원 쿠폰 받기
+          {{else}}
+          최대 {{discountInfo.discountRate}}% 할인 쿠폰 받기
+          {{/if}}
+        </span>
+        <span class="sp ico_arrow"></span>
+      </button>
+    </div>
+    {{/each}}
+  </script>
+  <script id="detail-images-template" type="text/x-handlebars-template">
+    <li>{{{content}}}</li>
+  </script>
+  <script id="option-images-popup-template" type="text/x-handlebars-template">
+
+    <div class="info-img"><img src="../style/img/detail/optionview.png" class="p-img" alt=""></div>
+    {{#each items}}
+    <div class="op-title">{{value}}</div>
+    <div class="op-img" style="display:inline-block;cursor: pointer;" onclick="showOptionPop('{{optionNo}}')">
+      <img src="{{imageUrl}}" class="p-img" alt="">
+    </div>
+    {{/each}}
+  </script>
+  <script id="reviews-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <div id="review{{@index}}">
+      <div class="con-qa">
+        <div class="info_top">
+          <span class="name">{{memberId}}</span>
+          <span class="date">{{#if updateYmdt}}{{updateYmdt}}{{else}}{{registerYmdt}}{{/if}}</span>
+        </div>
+        <div class="star">
+          <div>
+            <ul class="star-result">
+              {{#ge rate 1}}<li class="on">1</li>{{else}}<li>1</li>{{/ge}}
+              {{#ge rate 2}}<li class="on">2</li>{{else}}<li>2</li>{{/ge}}
+              {{#ge rate 3}}<li class="on">3</li>{{else}}<li>3</li>{{/ge}}
+              {{#ge rate 4}}<li class="on">4</li>{{else}}<li>4</li>{{/ge}}
+              {{#ge rate 5}}<li class="on">5</li>{{else}}<li>5</li>{{/ge}}
+            </ul>
+          </div>
+        </div>
+        <p class="txt">{{#contentExchange content}}{{/contentExchange}}</p>
+        <ul class="goods-list">
+          {{#each fileUrls}}
+          <li class="re_image" onclick="showImagePopup('{{this}}', '{{../reviewNo}}')" style="cursor: pointer;">
+            <img src="{{this}}" class="p-img" alt="">
+          </li>
+          {{/each}}
+        </ul>
+        {{#if myReview}}
+        <div class="btn-row left">
+          <button type="button" class="btn ctrl" onclick="modifyReview(this,'{{@index}}')">수정</button>
+          <button type="button" class="btn ctrl" onclick="deleteReview(this,'{{reviewNo}}')">삭제</button>
+        </div>
+        {{/if}}
+      </div>
+      <div id="reviewAnswer{{@index}}" class="open" hidden>
+        <div colspan="5" style="overflow:hidden;">
+          <div class="message">
+            <p class="txt">{{content}}</p>
+            <ul class="goods-list">
+              {{#each fileUrls}}
+              <li onclick="showImagePopup('{{this}}')" style="cursor: pointer;">
+                <img src="{{this}}" class="p-img" alt="" style="width: 104px; height: 104px;">
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    {{#unless items}}
+    <div style="text-align: center; padding-top: 20px;">
+      <p class="no_data">작성 된 상품구매후기가 없습니다.</p>
+    </div>
+    {{/unless}}
+  </script>
+  <script id="inquiries-template" type="text/x-handlebars-template">
+    {{#each items}}
+    <div>
+      <!-- {{#if answers}}
+      <tr id="inquiry{{@index}}" onclick="showDetail(this)">
+      {{else}}
+
+      {{/if}} -->
+      <ul id="inquiry{{@index}}">
+        <li id="content" class="txt_wrap">
+          <!-- 상품문의 -->
+          <div class="con-qa">
+            <div class="info_top">
+              <span class="name">{{memberId}}</span>
+              <span class="date">{{registerYmdt}}</span>
+            </div>
+            {{#if secreted}}
+            <span class="ico-lock">lock</span>
+            {{#if myInquiry}}
+            <span class="txt">{{#contentExchange content}}{{/contentExchange}}</span>
+            {{#unless replied}}
+            <div class="btn-row left">
+              <button type="button" class="btn ctrl" onclick="modifyInquiry(this,'{{@index}}')">수정</button>
+              <button type="button" class="btn ctrl" onclick="deleteInquiry(this,'{{inquiryNo}}')">삭제</button>
+            </div>
+            {{/unless}}
+            {{else}}
+            <span>비공개 문의 입니다.</span>
+            {{/if}}
+            {{else}}
+            <p class="txt">{{#contentExchange content}}{{/contentExchange}}</p>
+            {{#if myInquiry}}
+            {{#unless replied}}
+            <div class="btn-row left">
+              <button type="button" class="btn ctrl" onclick="modifyInquiry(this,'{{@index}}')">수정</button>
+              <button type="button" class="btn ctrl" onclick="deleteInquiry(this,'{{inquiryNo}}')">삭제</button>
+            </div>
+            {{/unless}}
+            {{/if}}
+            {{/if}}
+          </div>
+          <!-- //상품문의 -->
+        </li>
+      </ul>
+      {{#if answers}}
+      <ul id="inquiryAnswer{{@index}}" class="open"/>
+      {{else}}
+      <ul id="inquiryAnswer{{@index}}" class="open" hidden>
+        {{/if}}
+        <li colspan="5">
+          <div class="message">
+            {{#each answers}}
+            <!-- <p class="txt">{{title}}</p> -->
+            <dl class="reply">
+              <dt>{{adminName}}<time>{{updateYmdt}}</time></dt>
+              {{#if ../myInquiry}}
+              <dd>{{{content}}}</dd>
+              {{else}}
+              {{#if ../secreted}}
+              <dd><span class="ico-lock">lock</span>&nbsp;비공개 답변 입니다.</dd>
+              {{else}}
+              <dd>{{{content}}}</dd>
+              {{/if}}
+              {{/if}}
+            </dl>
+            {{/each}}
+          </div>
+        </li>
+      </ul>
+    </div>
+    {{/each}}
+    {{#unless items}}
+    <div style="text-align: center; padding-top: 20px;">
+      <p class="no_data">작성 된 상품문의가 없습니다.</p>
+    </div>
+    {{/unless}}
+  </script>
+  <script id="inquiriy-modify-template" type="text/x-handlebars-template">
+    <td colspan="5" style="display:block">
+      <div class="consultation-text" style="text-align:left;">
+        <form id="inquiryModifyForm{{index}}" action="">
+          <div class="text-wrap">
+            <div class="textarea">
+              <textarea class="textarea-normal textarea_inquiriy_{{inquiriy.inquiryNo}}" name="content" cols="30" rows="10" maxlength="1000" onkeydown="updateLength('inquiriy_{{inquiriy.inquiryNo}}')" onkeypress="updateLength('inquiriy_{{inquiriy.inquiryNo}}')" onkeyup="updateLength('inquiriy_{{inquiriy.inquiryNo}}')" onchange="updateLength('inquiriy_{{inquiriy.inquiryNo}}')">{{inquiriy.content}}</textarea>
+              <p class="textarea-limit length_inquiriy_{{inquiriy.inquiryNo}}">{{inquiriy.content.length}}자 / 1000자</p>
+            </div>
+          </div>
+          <div class="secret cf">
+            <dl class="txt">
+              <dt>
+                <div class="qa-checkbox">
+                  <span class="ico-lock">lock</span>
+                  {{#if inquiriy.secreted}}
+                  <p class="checkbox-normal">
+                    <input id="modifySecretedCheckBox" type="checkbox" checked="checked">
+                    <label></label>
+                  </p>
+                  {{else}}
+                  <p class="checkbox-normal">
+                    <input id="modifySecretedCheckBox" type="checkbox" >
+                    <label></label>
+                  </p>
+                  {{/if}}
+                  비밀글 문의
+                </div>
+              </dt>
+            </dl>
+            <p class="btn-row"  style="text-align:left;">
+              <input value="{{inquiriy.inquiryNo}}" name="inquiryNo" type="hidden">
+              <button type="button" class="btn white-2 style-3-1" onclick="cancelModifyInquiry('{{index}}')">취소하기</button>
+              <button type="submit" class="btn black style-3-1" onclick="submitModifyInquiry('{{index}}')">등록하기</button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </td>
+  </script>
+  <script id="review-modify-template" type="text/x-handlebars-template">
+    <td colspan="5" style="display: block;">
+      <div class="evaluate-text" style="text-align:left;">
+        <form id="formReview{{index}}" action="">
+          <!-- <h2>
+            <strong>리뷰</strong>
+            <span>구매 고객님의 좋은 의견 주세요(문의글 혹은 악의적 비방글은 무통보 삭제됩니다.</span>
+          </h2> -->
+          <div class="text-wrap">
+            <div class="textarea">
+              <textarea class="textarea-noborder textarea_review_{{review.reviewNo}}" name="content" cols="30" rows="10" maxlength="1000" onkeydown="updateLength('review_{{review.reviewNo}}')" onkeypress="updateLength('review_{{review.reviewNo}}')" onkeyup="updateLength('review_{{review.reviewNo}}')" onchange="updateLength('review_{{review.reviewNo}}')">{{review.content}}</textarea>
+              <p class="textarea-limit length_review_{{review.reviewNo}}">{{review.content.length}}자 / 1000자</p>
+            </div>
+            <div class="img-up">
+              <ul>
+                {{#each review.fileUrls}}
+                <li>
+                  <img src="{{this}}" class="p-img" alt="">
+                  <button type="button" onclick="removeReviewImg(this)" class="btn-close-1">close</button>
+                </li>
+                {{/each}}
+                <li id="reviewSelImg{{index}}">
+                  <button onclick="addImage('reviewSelImg{{index}}', '{{index}}')" type="button" class="btn pic">
+                    <span>pic</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="evaluate cf">
+            <dl class="star">
+              <dt>별점</dt>
+              <dd>
+                <div id="starSelect{{index}}" class="select-star">
+                  <p class="select-result star-{{review.rate}}" data-star="star-{{review.rate}}"></p>
+                  <ul class="select-list">
+                    <li class="star-5">5</li>
+                    <li class="star-4">4</li>
+                    <li class="star-3">3</li>
+                    <li class="star-2">2</li>
+                    <li class="star-1">1</li>
+                  </ul>
+                </div>
+              </dd>
+            </dl>
+            <p class="btn-row" style="text-align:left;">
+              <input value="{{review.reviewNo}}" name="reviewNo" type="hidden">
+              <button type="button" class="btn white-2 style-3-1" onclick="cancelModifyReview('{{index}}')">취소하기</button>
+              <button type="submit" class="btn black style-3-1" onclick="submitModifyReview('{{index}}')">등록하기</button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </td>
+  </script>
+</head>
+
+<body>
+
+<!-- ▼▼▼▼▼▼ wrapper ▼▼▼▼▼▼ -->
+<div id="wrapper">
+
+  <!-- ▼▼▼▼ header ▼▼▼▼ -->
+  <div id="header"></div>
+  <!-- ▲▲▲▲ header ▲▲▲▲ -->
+
+  <!-- ▼▼▼▼ main ▼▼▼▼ -->
+  <main id="main">
+    <div class="wrap">
+      <!-- ▼▼ detail-wrap ▼▼ -->
+      <div class="detail-wrap">
+        <!-- ▲ header ▲ -->
+        <!-- ▼ shoping ▼ -->
+        <div class="shoping cf">
+          <!-- exhibition -->
+          <div class="exhibition">
+            <!--  img-switch  -->
+            <div class="img-switch">
+              <section class="lazy slider-1 box_border_2" data-sizes="50vw"></section>
+            </div>
+            <!--  /img-switch  -->
+            <!--  img-loop  -->
+            <div class="img-loop">
+              <section class="lazy slider-2" data-sizes="50vw"></section>
+            </div>
+            <!--  /img-loop  -->
+          </div>
+          <!-- /exhibition -->
+          <!-- purchase -->
+          <div id="purchaseInfo" class="purchase lazy">
+            <h1 id="productName"></h1>
+            <p id="promotionText" class="txt-ex"></p>
+            <ul class="price">
+              <li class="onsale price">
+                <strong id="totalPrice"></strong>
+              </li>
+              <li class="onsale price">
+                <s id="salePrice"></s>
+              </li>
+              <li class="onsale contentsIfPausing">
+                <strong id="contentsIfPausing"></strong>
+              </li>
+              <dl id="saleStatus" class="state" hidden><!-- 판매종료 일때 class="sold_out" 추가, 판매임박을 경우 draws_near 추가 -->
+                <dt></dt><dd id="sale_date" class="date"><span class="date1"></span> ~ <span class="date2"></span></dd>
+              </dl>
+            </ul>
+            <dl class="express onsale">
+              <dt>배송비</dt>
+              <dd id="deliveryAmt"></dd>
+            </dl>
+            <dl class="onsale size">
+              <dt id="optionName">옵션</dt>
+              <dd>
+                <div class="bx_select size_1">
+                  <div href="javascript:;" class="txt_select_1">
+                  </div>
+                  <ul class="lst_sub_option">
+                  </ul>
+                </div>
+              </dd>
+            </dl>
+            <dl class="number" style="display: none;">
+              <dt>수량</dt>
+              <dd>
+                <div class="amount" style="width:153px;" >
+                  <button class="decrease" style="width:25px;" onClick="cntSet('minus')">-</button>
+                  <input id="orderCnt" class="input-normal" type="text" maxlength="8"  autocomplete="off" style="display: inline-block;width:103px;text-align: center;" value="1" onblur="buyCountInputCheck(this)">
+                  <button class="increase" style="width:25px;" onClick="cntSet('plus')">+</button>
+                </div>
+              </dd>
+            </dl>
+            <div id="coupons" class="coupon percent">
+            </div>
+            <!-- 20190513 추가 -->
+            <div class="option-wrap"></div>
+            <div class="total-wrap">
+              총 상품금액<span>0</span>원
+            </div>
+            <!-- //20190513 추가 -->
+            <div class="operation cf">
+              <ul class="btn-list"></ul>
+              <div class="sharing" style="cursor: pointer;">
+                <button type="button" class="btn share">sns</button>
+                <p class="txt">공유</p>
+                <div class="sns-list">
+                  <ul>
+                    <li>
+                      <button type="button" onClick="shareSNS('F');" class="btn sns fb">sns</button>
+                      <span onClick="shareSNS('F');">페이스북</span>
+                    </li>
+                    <li>
+                      <button type="button" onClick="shareSNS('T');" class="btn sns tw">sns</button>
+                      <span onClick="shareSNS('T');">트위터</span>
+                    </li>
+                    <!--
+                      <li>
+                      <button type="button" onClick="shareSNS('KS');" class="btn sns kk">sns</button>
+                      <span onClick="shareSNS('KS');">카카오스토리</span>
+                    </li>
+                    -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="other-pay">
+              <!--<div class="naver-pay">-->
+              <!--<div class="pay cf">-->
+              <!--<dl class="info">-->
+              <!--<dt>-->
+              <!--<img src="/style/img/common/logo_naver.png" alt="">-->
+              <!--</dt>-->
+              <!--<dd>네이버ID로 간편구매-->
+              <!--<br>네이버페이-->
+              <!--</dd>-->
+              <!--</dl>-->
+              <!--<ul class="btn-row">-->
+              <!--<li>-->
+              <!--<button type="button" class="btn-naver-pay">naver pay</button>-->
+              <!--</li>-->
+              <!--<li>-->
+              <!--<button type="button" class="btn-collection">collection</button>-->
+              <!--</li>-->
+              <!--</ul>-->
+              <!--</div>-->
+              <!--<div class="new cf">-->
+              <!--<div class="loop">-->
+              <!--<ul class="ttl-list cf">-->
+              <!--<li>-->
+              <!--<span>[네이버페이]</span> 신용카드 출시!지금 신청하-->
+              <!--</li>-->
+              <!--<li>-->
+              <!--<span>[네이버페이]</span> 신용카드 출시!지금 신청하-->
+              <!--</li>-->
+              <!--<li>-->
+              <!--<span>[네이버페이]</span> 신용카드 출시!지금 신청하-->
+              <!--</li>-->
+              <!--</ul>-->
+              <!--</div>-->
+              <!--<ul class="btn-list">-->
+              <!--<li>-->
+              <!--<button type="button" class="btn page-smaller-1 pre">previous</button>-->
+              <!--</li>-->
+              <!--<li>-->
+              <!--<button type="button" class="btn page-smaller-1 next">next</button>-->
+              <!--</li>-->
+              <!--</ul>-->
+              <!--</div>-->
+              <!--</div>-->
+            </div>
+          </div>
+          <!-- /purchase -->
+        </div>
+        <!-- ▲ shoping ▲ -->
+        <!-- ▼ detailed ▼ -->
+        <div class="detailed">
+          <!-- tab-goods -->
+          <ul class="tab-goods js_part">
+            <li class="on">
+              <a href="#" data-idx=1>상세정보</a>
+            </li>
+            <li id="purchase-guide" style="display: none;">
+              <a href="#" data-idx=2>구매안내</a>
+            </li>
+            <li>
+              <a href="#" data-idx=3>구매후기</a>
+            </li>
+            <li>
+              <a href="#" data-idx=4>상품문의</a>
+            </li>
+          </ul>
+          <!-- /tab-goods -->
+          <!-- purchase-guide -->
+          <div class="purchase-guide">
+          </div>
+          <!-- /purchase-guide -->
+          <!-- con-goods -->
+          <div class="con-goods">
+            <ul id="proDetailImages" class="goods-list inline_b">
+            </ul>
+            <div id="optionMainImages"></div>
+            <div id="dutyInfoContents" class="goods-details"></div>
+
+          </div>
+          <!-- /con-goods -->
+          <form id="uploadForm" enctype="multipart/form-data" hidden>
+            <input id="fileInput" type="file" accept="image/*">
+          </form>
+          <!-- con-service -->
+          <div class="con-service">
+            <div class="evaluate-text">
+              <form id="formReview" action="#" style="margin-bottom: 150px;" hidden>
+                <h2>
+                  <strong>구매후기</strong>
+                  <span>구매하신 상품에 대해 의견 남겨주세요. (상품과 무관한 리뷰글은 통보 없이 삭제될 수 있습니다.)</span>
+                </h2>
+                <div class="text-wrap">
+                  <div class="textarea">
+                    <textarea class="textarea-noborder textarea_review" name="content" id="contentReview" cols="30" rows="10" maxlength="1000" onkeydown="updateLength('review')" onkeypress="updateLength('review')" onkeyup="updateLength('review')" onchange="updateLength('review')"></textarea>
+                    <p class="textarea-limit length_review">0자 / 1000자</p>
+                  </div>
+                  <div class="img-up">
+                    <ul id="reviewImageList">
+                      <li id="newReviewSelImg">
+                        <button onclick="addImage('newReviewSelImg')" type="button" class="btn pic">
+                          <span>pic</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="evaluate cf">
+                  <dl class="star">
+                    <dt>별점</dt>
+                    <dd>
+                      <div class="select-star">
+                        <p id="selectStarReview" class="select-result star-5" data-star="star-5"></p>
+                        <ul class="select-list">
+                          <li class="star-5">5</li>
+                          <li class="star-4">4</li>
+                          <li class="star-3">3</li>
+                          <li class="star-2">2</li>
+                          <li class="star-1">1</li>
+                        </ul>
+                      </div>
+                    </dd>
+                  </dl>
+                  <p class="btn-row">
+                    <input type="hidden" name="optionNo">
+                    <input type="hidden" name="orderOptionNo">
+                    <button type="submit" class="btn black style-3-1">등록하기</button>
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div class="history">
+              <div class="history_wrap">
+                <div id="proReview" style="border-top: 1px solid #ababab;">
+                </div>
+              </div>
+              <p class="btn-row">
+                <button id="btnMoreReview" type="button" class="btn white-2 style-3-4">더보기</button>
+              </p>
+            </div>
+          </div>
+          <!-- con-consultation -->
+          <div class="con-consultation">
+            <div class="consultation-text">
+              <form id="formInquiry" action="#">
+                <h2>
+                  <strong>상품문의</strong>
+                  <span>상품에 관한 문의사항을 입력해주세요.</span>
+                </h2>
+                <div class="text-wrap">
+                  <div class="textarea">
+                    <textarea class="textarea-normal textarea_inquiriy" name="content" id="contentInquiry" cols="30" rows="10" maxlength="1000" onkeydown="updateLength('inquiriy')" onkeypress="updateLength('inquiriy')" onkeyup="updateLength('inquiriy')" onchange="updateLength('inquiriy')"></textarea>
+                    <p class="textarea-limit length_inquiriy"><span>0</span>자 / 1000자</p><!-- 20190225 -->
+                  </div>
+                </div>
+                <div class="secret cf">
+                  <dl class="txt">
+                    <dt>
+                      <div class="qa-checkbox">
+                        <p class="checkbox-normal" style="display: inline-block; vertical-align: middle;">
+                          <input id="secretedCheckBox" type="checkbox"><label></label><!-- 20190225 --></p>
+                        <span class="ico-lock">lock</span><label for="secretedCheckBox">비밀글 문의</label>
+                      </div>
+                    </dt>
+                    <dd>
+
+                    </dd>
+                  </dl>
+                  <p class="btn-row">
+                    <button type="submit" class="btn black style-3-1">등록하기</button>
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div class="history">
+              <div class="history_wrap">
+                <div id="proInquiry" style="border-top: 1px solid #ababab;">
+                </div>
+              </div>
+              <p class="btn-row">
+                <button id="btnMoreInquiry" type="button" class="btn white-2 style-3-4">더보기</button>
+              </p>
+            </div>
+          </div>
+          <!-- con-consultation -->
+        </div>
+        <!-- ▲ detailed ▲ -->
+      </div>
+      <!-- ▲▲ detail-wrap ▲▲ -->
+    </div>
+  </main>
+  <!-- ▲▲▲▲ main ▲▲▲▲ -->
+
+  <!-- ▼▼▼▼ footer ▼▼▼▼ -->
+  <div id="footer" />
+  <!-- ▲▲▲▲ footer ▲▲▲▲ -->
+
+</div>
+<!-- ▲▲▲▲▲▲ wrapper ▲▲▲▲▲▲ -->
+
+<!-- popup-detail -->
+<div class="popup-detail">
+  <div class="popup-wrap">
+    <h2>장바구니 담기</h2>
+    <dl class="text">
+      <dt>상품이 장바구니에 담겼습니다.</dt>
+      <dd>바로 확인하시겠습니까?</dd>
+    </dl>
+    <ul class="btn-list">
+      <li>
+        <button id="btnPopOk" type="button" class="btn gray style-3-2">예</button>
+      </li>
+      <li>
+        <button id="btnPopCancel" type="button" class="btn white-2 style-3-2">아니오</button>
+      </li>
+    </ul>
+    <p class="close">
+      <button id="btnPopClose" type="button" class="btn-close-2">close</button>
+    </p>
+  </div>
+</div>
+<!-- /popup-detail -->
+<div class="popup-mask" style="display: none;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1000;background-color: rgba(220,220,220,0.8);">
+  <div class="popup-more">
+    <div class="more_contents">
+      <div class="more_tit">
+        <strong>옵션 자세히 보기</strong>
+      </div>
+      <h3 class="more_name"></h3>
+      <div class="area_contents">
+        <button type="button" class="btn_prev" onclick="onClickOptionSlidePrev();">Previous</button>
+        <section class="lazy option-slider" data-sizes="50vw"></section>
+        <button type="button" class="btn_next" onclick="onClickOptionSlideNext();">Next</button>
+      </div>
+      <div class="img-cnt"><span class="first"></span><span class="total"></span></div>
+      <button type="button" onclick="hideOptionPop()" class="btn-close-3">close</button>
+    </div>
+  </div>
+</div>
+</body>
+<script src="../js/module/product.js"></script>
+
+<!-- Mirrored from thetestkitchen.co.kr/common/product.html?pno={{productNo}} by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jan 2020 15:38:13 GMT -->
+</html>
