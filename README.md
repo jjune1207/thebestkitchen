@@ -1,4 +1,4 @@
-# Spring MVC-Model1 패턴으로 https://www.thetestkitchen.co.kr/ 을 벤치마킹하여 제작
+# Spring MVC-Model1 패턴으로 https://www.thetestkitchen.co.kr/ 을 벤치마킹한 쇼핑몰
 
 프로젝트명: thebestkitchen (JSP Semi Project)
 
